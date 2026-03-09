@@ -1,15 +1,24 @@
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from apps.catalog.models import Product
+
+from apps.catalog.models import (
+    Product,
+    CanonicalProduct,
+    Supplier,
+    SupplierProduct,
+)
+
 from apps.catalog.services.external_api.digikey_api import (
     search_products,
     normalize_products,
 )
+
 from apps.catalog.services.category_engine import auto_assign_category
 
 
 def ensure_unique_slug(base_slug, serial_number):
     slug = slugify(base_slug) or "item"
+
     candidate = slug
     suffix = 2
 
@@ -29,7 +38,17 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
+        # DigiKey 공급처 생성
+        supplier, _ = Supplier.objects.get_or_create(
+            code="DIGIKEY",
+            defaults={
+                "name": "DigiKey",
+                "website": "https://www.digikey.com",
+            },
+        )
+
         raw = search_products("Raspberry Pi")
+
         products = normalize_products(raw)
 
         print("\n===== IMPORT START =====\n")
@@ -38,34 +57,67 @@ class Command(BaseCommand):
 
         for item in products:
 
-            serial_number = item["dk_part"] or item["mpn"]
+            serial_number = item.get("dk_part") or item.get("mpn")
+
             if not serial_number:
                 continue
 
-            # 🔥 자동 분류 적용
+            manufacturer = item.get("manufacturer") or ""
+            mpn = item.get("mpn") or ""
+
+            canonical = None
+
+            # CanonicalProduct 자동 생성
+            if manufacturer and mpn:
+                canonical, _ = CanonicalProduct.objects.get_or_create(
+                    manufacturer=manufacturer,
+                    mpn=mpn,
+                    defaults={
+                        "name": item.get("description") or mpn,
+                    },
+                )
+
+            # 카테고리 자동 분류
             category = auto_assign_category(item)
 
             slug_value = ensure_unique_slug(
-                item["description"] or serial_number,
+                item.get("description") or serial_number,
                 serial_number,
             )
 
+            # Product 생성 / 업데이트
             obj, created = Product.objects.update_or_create(
                 serial_number=serial_number,
                 defaults={
-                    "product_code": item["dk_part"] or "",
-                    "name": item["description"] or serial_number,
+                    "product_code": item.get("dk_part") or "",
+                    "name": item.get("description") or serial_number,
                     "slug": slug_value,
-                    "price": item["price"] or 0,
-                    "short_description": item["description"] or "",
-                    "brand": item["manufacturer"] or "",
-                    "source_url": item["url"] or "",
+                    "price": item.get("price") or 0,
+                    "short_description": item.get("description") or "",
+                    "brand": manufacturer,
+                    "manufacturer": manufacturer,
+                    "mpn": mpn,
+                    "source_url": item.get("url") or "",
                     "category": category,
+                    "canonical": canonical,
+                },
+            )
+
+            # SupplierProduct 생성 (가격비교용)
+            SupplierProduct.objects.update_or_create(
+                supplier=supplier,
+                supplier_part_number=serial_number,
+                defaults={
+                    "product": obj,
+                    "price": item.get("price") or 0,
+                    "stock": item.get("stock") or 0,
+                    "url": item.get("url") or "",
                 },
             )
 
             if created:
                 print(f"✔ Created: {obj.name}")
+
             else:
                 print(f"↻ Updated: {obj.name}")
 
