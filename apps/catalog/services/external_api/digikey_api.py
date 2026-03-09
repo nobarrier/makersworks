@@ -1,14 +1,9 @@
-import os
 import requests
-from dotenv import load_dotenv
-from pathlib import Path
+from django.conf import settings
 from .digikey_auth import get_access_token
 
-BASE_DIR = Path(__file__).resolve().parents[4]
-load_dotenv(BASE_DIR / ".env")
-
-CLIENT_ID = os.getenv("DIGIKEY_CLIENT_ID")
-ENV = os.getenv("DIGIKEY_ENV")
+CLIENT_ID = (getattr(settings, "DIGIKEY_CLIENT_ID", "") or "").strip()
+ENV = (getattr(settings, "DIGIKEY_ENV", "production") or "production").strip().lower()
 
 if ENV == "sandbox":
     BASE_URL = "https://sandbox-api.digikey.com"
@@ -17,6 +12,9 @@ else:
 
 
 def search_products(keyword="Raspberry Pi"):
+    if not CLIENT_ID:
+        raise RuntimeError("DIGIKEY_CLIENT_ID is missing.")
+
     token = get_access_token()
 
     url = f"{BASE_URL}/products/v4/search/keyword"
@@ -33,10 +31,12 @@ def search_products(keyword="Raspberry Pi"):
         "RecordCount": 5,
     }
 
-    response = requests.post(url, json=payload, headers=headers)
+    response = requests.post(url, json=payload, headers=headers, timeout=20)
 
     if response.status_code != 200:
-        raise Exception(response.text)
+        raise RuntimeError(
+            f"DigiKey product search failed ({response.status_code}): {response.text}"
+        )
 
     return response.json()
 
@@ -112,7 +112,5 @@ def normalize_products(data):
                 "category_path": category_path,
             }
         )
-
-    return products
 
     return products
