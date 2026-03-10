@@ -7,11 +7,9 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(BASE_DIR.parent.parent / ".env")
+load_dotenv(BASE_DIR / ".env")
 
 # ========================
 # SECURITY
@@ -131,8 +129,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.getenv("DB_NAME", "makersworks"),
-        "USER": os.getenv("DB_USER", "makers"),
-        "PASSWORD": os.getenv("DB_PASSWORD", "makers1234"),
+        "USER": os.getenv("DB_USER", "books"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "books1234"),
         "HOST": os.getenv("DB_HOST", "127.0.0.1"),
         "PORT": os.getenv("DB_PORT", "5432"),
     }

@@ -17,16 +17,21 @@ def get_access_token():
         raise RuntimeError("DIGIKEY_CLIENT_ID / DIGIKEY_CLIENT_SECRET missing")
 
     credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
-    encoded = base64.b64encode(credentials.encode()).decode()
+    encoded_credentials = base64.b64encode(credentials.encode()).decode()
 
     headers = {
-        "Authorization": f"Basic {encoded}",
+        "Authorization": f"Basic {encoded_credentials}",
         "Content-Type": "application/x-www-form-urlencoded",
     }
 
     data = {"grant_type": "client_credentials"}
 
-    response = requests.post(TOKEN_URL, headers=headers, data=data, timeout=20)
+    response = requests.post(
+        TOKEN_URL,
+        headers=headers,
+        data=data,
+        timeout=20,
+    )
 
     if response.status_code != 200:
         raise RuntimeError(
