@@ -3,23 +3,22 @@ Django settings for config project.
 Production-ready configuration (Dev + Prod compatible)
 """
 
+from dotenv import load_dotenv
 from pathlib import Path
 import os
-from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# .env 로드
 load_dotenv(BASE_DIR / ".env")
 
 # ========================
 # SECURITY
 # ========================
 
-# DEBUG 환경변수 기반 (기본값 False)
-DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
-# SECRET_KEY 처리
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 if not SECRET_KEY:
     if DEBUG:
@@ -39,19 +38,19 @@ ALLOWED_HOSTS = [
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 
-# HTTPS behind Nginx
+# ========================
+# HTTPS (Nginx Reverse Proxy)
+# ========================
+
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# 보안 헤더
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 
-# HTTPS 강제 리다이렉트 (운영에서만 적용)
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = not DEBUG
 
-# CSRF
 CSRF_TRUSTED_ORIGINS = [
     "http://makersworks.kr",
     "http://www.makersworks.kr",
@@ -59,7 +58,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.makersworks.kr",
 ]
 
-# 쿠키 보안 (운영에서만 True)
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
@@ -143,7 +141,6 @@ DATABASES = {
 DIGIKEY_CLIENT_ID = os.getenv("DIGIKEY_CLIENT_ID")
 DIGIKEY_CLIENT_SECRET = os.getenv("DIGIKEY_CLIENT_SECRET")
 DIGIKEY_ENV = os.getenv("DIGIKEY_ENV", "production")
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # ========================
 # PASSWORD VALIDATION
@@ -174,6 +171,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
