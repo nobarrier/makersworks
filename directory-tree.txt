@@ -1,0 +1,343 @@
+makersworks/
+├── accounts/
+│   ├── __pycache__/
+│   │   ├── __init__.cpython-313.pyc
+│   │   ├── admin.cpython-313.pyc
+│   │   ├── apps.cpython-313.pyc
+│   │   ├── models.cpython-313.pyc
+│   │   ├── urls.cpython-313.pyc
+│   │   └── views.cpython-313.pyc
+│   ├── migrations/
+│   │   ├── __pycache__/
+│   │   │   └── __init__.cpython-313.pyc
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── apps/
+│   ├── __pycache__/
+│   │   └── __init__.cpython-313.pyc
+│   ├── cart/
+│   │   ├── __pycache__/
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── admin.cpython-313.pyc
+│   │   │   ├── apps.cpython-313.pyc
+│   │   │   ├── context_processors.cpython-313.pyc
+│   │   │   ├── models.cpython-313.pyc
+│   │   │   ├── urls.cpython-313.pyc
+│   │   │   └── views.cpython-313.pyc
+│   │   ├── migrations/
+│   │   │   ├── __pycache__/
+│   │   │   │   └── __init__.cpython-313.pyc
+│   │   │   └── __init__.py
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── context_processors.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   ├── catalog/
+│   │   ├── __pycache__/
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── admin.cpython-313.pyc
+│   │   │   ├── apps.cpython-313.pyc
+│   │   │   ├── context_processors.cpython-313.pyc
+│   │   │   ├── models.cpython-313.pyc
+│   │   │   ├── urls.cpython-313.pyc
+│   │   │   └── views.cpython-313.pyc
+│   │   ├── management/
+│   │   │   ├── __pycache__/
+│   │   │   │   └── __init__.cpython-313.pyc
+│   │   │   ├── commands/
+│   │   │   │   ├── __pycache__/
+│   │   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   │   └── import_digikey_products.cpython-313.pyc
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── generate_variants.py
+│   │   │   │   ├── import_digikey.py
+│   │   │   │   ├── import_digikey_categories.py
+│   │   │   │   ├── import_digikey_mass.py
+│   │   │   │   ├── import_digikey_products.py
+│   │   │   │   ├── import_icbanq.py
+│   │   │   │   ├── init_inventory.py
+│   │   │   │   ├── seed_categories.py
+│   │   │   │   ├── seed_fake_products.py
+│   │   │   │   ├── seed_products.py
+│   │   │   │   ├── test_digikey_search.py
+│   │   │   │   ├── test_digikey_token.py
+│   │   │   │   └── unify_products.py
+│   │   │   └── __init__.py
+│   │   ├── migrations/
+│   │   │   ├── __pycache__/
+│   │   │   │   ├── 0001_initial.cpython-313.pyc
+│   │   │   │   ├── 0002_alter_category_options_category_parent_and_more.cpython-313.pyc
+│   │   │   │   ├── 0003_alter_category_options_alter_product_options_and_more.cpython-313.pyc
+│   │   │   │   ├── 0004_alter_product_image_productimage.cpython-313.pyc
+│   │   │   │   ├── 0005_alter_category_slug_alter_category_unique_together.cpython-313.pyc
+│   │   │   │   ├── 0006_alter_category_unique_together_and_more.cpython-313.pyc
+│   │   │   │   ├── 0007_product_product_code_productvariant.cpython-313.pyc
+│   │   │   │   ├── 0008_warehouse_stockledger.cpython-313.pyc
+│   │   │   │   ├── 0009_remove_product_stock_remove_productvariant_stock.cpython-313.pyc
+│   │   │   │   ├── 0010_warehouse_code.cpython-313.pyc
+│   │   │   │   ├── 0011_inventory.cpython-313.pyc
+│   │   │   │   ├── 0012_categoryrule_alter_stockledger_type.cpython-313.pyc
+│   │   │   │   ├── 0013_product_external_id_and_more.cpython-313.pyc
+│   │   │   │   ├── 0014_product_source_category_path_product_source_supplier.cpython-313.pyc
+│   │   │   │   ├── 0015_alter_category_slug_alter_category_unique_together.cpython-313.pyc
+│   │   │   │   ├── 0016_mall_product_mall.cpython-313.pyc
+│   │   │   │   ├── 0017_product_manufacturer_product_mpn_and_more.cpython-313.pyc
+│   │   │   │   ├── 0018_supplier_supplierproduct.cpython-313.pyc
+│   │   │   │   ├── 0019_remove_product_catalog_pro_manufac_e16430_idx_and_more.cpython-313.pyc
+│   │   │   │   ├── 0020_canonicalproduct_product_canonical.cpython-313.pyc
+│   │   │   │   └── __init__.cpython-313.pyc
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── 0002_alter_category_options_category_parent_and_more.py
+│   │   │   ├── 0003_alter_category_options_alter_product_options_and_more.py
+│   │   │   ├── 0004_alter_product_image_productimage.py
+│   │   │   ├── 0005_alter_category_slug_alter_category_unique_together.py
+│   │   │   ├── 0006_alter_category_unique_together_and_more.py
+│   │   │   ├── 0007_product_product_code_productvariant.py
+│   │   │   ├── 0008_warehouse_stockledger.py
+│   │   │   ├── 0009_remove_product_stock_remove_productvariant_stock.py
+│   │   │   ├── 0010_warehouse_code.py
+│   │   │   ├── 0011_inventory.py
+│   │   │   ├── 0012_categoryrule_alter_stockledger_type.py
+│   │   │   ├── 0013_product_external_id_and_more.py
+│   │   │   ├── 0014_product_source_category_path_product_source_supplier.py
+│   │   │   ├── 0015_alter_category_slug_alter_category_unique_together.py
+│   │   │   ├── 0016_mall_product_mall.py
+│   │   │   ├── 0017_product_manufacturer_product_mpn_and_more.py
+│   │   │   ├── 0018_supplier_supplierproduct.py
+│   │   │   ├── 0019_remove_product_catalog_pro_manufac_e16430_idx_and_more.py
+│   │   │   ├── 0020_canonicalproduct_product_canonical.py
+│   │   │   └── __init__.py
+│   │   ├── services/
+│   │   │   ├── __pycache__/
+│   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   ├── category_engine.cpython-313.pyc
+│   │   │   │   └── price_engine.cpython-313.pyc
+│   │   │   ├── external_api/
+│   │   │   │   ├── __pycache__/
+│   │   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   │   ├── digikey_api.cpython-313.pyc
+│   │   │   │   │   └── digikey_auth.cpython-313.pyc
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── digikey_api.py
+│   │   │   │   └── digikey_auth.py
+│   │   │   ├── importers/
+│   │   │   │   ├── __pycache__/
+│   │   │   │   ├── __init__.py
+│   │   │   │   ├── digikey_importer.py
+│   │   │   │   └── upsert_engine.py
+│   │   │   ├── __init__.py
+│   │   │   ├── base_importer.py
+│   │   │   ├── category_engine.py
+│   │   │   ├── import_schema.py
+│   │   │   ├── mpn_engine.py
+│   │   │   └── price_engine.py
+│   │   ├── templatetags/
+│   │   │   ├── __pycache__/
+│   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   └── querystring.cpython-313.pyc
+│   │   │   ├── __init__.py
+│   │   │   └── querystring.py
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── context_processors.py
+│   │   ├── models.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   ├── orders/
+│   │   ├── __pycache__/
+│   │   │   ├── __init__.cpython-313.pyc
+│   │   │   ├── admin.cpython-313.pyc
+│   │   │   ├── apps.cpython-313.pyc
+│   │   │   ├── models.cpython-313.pyc
+│   │   │   ├── urls.cpython-313.pyc
+│   │   │   └── views.cpython-313.pyc
+│   │   ├── management/
+│   │   │   ├── __pycache__/
+│   │   │   │   └── __init__.cpython-313.pyc
+│   │   │   ├── commands/
+│   │   │   │   ├── __pycache__/
+│   │   │   │   ├── __init__.py
+│   │   │   │   └── migrate_order_variants.py
+│   │   │   └── __init__.py
+│   │   ├── migrations/
+│   │   │   ├── __pycache__/
+│   │   │   │   ├── 0001_initial.cpython-313.pyc
+│   │   │   │   ├── 0002_rename_price_orderitem_unit_price_snapshot_and_more.cpython-313.pyc
+│   │   │   │   └── __init__.cpython-313.pyc
+│   │   │   ├── 0001_initial.py
+│   │   │   ├── 0002_rename_price_orderitem_unit_price_snapshot_and_more.py
+│   │   │   └── __init__.py
+│   │   ├── services/
+│   │   │   ├── __pycache__/
+│   │   │   │   ├── __init__.cpython-313.pyc
+│   │   │   │   └── stock_service.cpython-313.pyc
+│   │   │   ├── __init__.py
+│   │   │   └── stock_service.py
+│   │   ├── __init__.py
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── models.py
+│   │   ├── signals.py
+│   │   ├── tests.py
+│   │   ├── urls.py
+│   │   └── views.py
+│   └── __init__.py
+├── config/
+│   ├── __pycache__/
+│   │   ├── __init__.cpython-313.pyc
+│   │   ├── settings.cpython-313.pyc
+│   │   ├── urls.cpython-313.pyc
+│   │   └── wsgi.cpython-313.pyc
+│   ├── templates/
+│   │   ├── accounts/
+│   │   │   ├── login.html
+│   │   │   ├── order_history.html
+│   │   │   └── support.html
+│   │   ├── admin/
+│   │   │   ├── base_site.html
+│   │   │   ├── csv_form.html
+│   │   │   └── products_changelist.html
+│   │   ├── cart/
+│   │   │   └── cart_list.html
+│   │   ├── catalog/
+│   │   │   ├── category_list.html
+│   │   │   ├── product_detail.html
+│   │   │   └── product_list.html
+│   │   ├── orders/
+│   │   │   ├── checkout.html
+│   │   │   └── complete.html
+│   │   ├── partials/
+│   │   │   ├── footer.html
+│   │   │   ├── header.html
+│   │   │   ├── nav_category.html
+│   │   │   └── nav_recursive.html
+│   │   ├── registration/
+│   │   │   └── login.html
+│   │   ├── users/
+│   │   │   ├── mypage.html
+│   │   │   └── signup.html
+│   │   ├── base.html
+│   │   └── home.html
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── data.json
+│   ├── requirements.txt
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── data/
+│   ├── export/
+│   ├── import/
+│       ├── products/
+│           ├── booksmakers_products_template.csv
+│           ├── booksmakers_products_template2.xlsx
+│           ├── booksmakers_products_template3.csv
+│           └── products_import.csv
+├── item_picture/
+│   └── {8C7D120F-1DE5-4BEF-B662-D118B3989C5C}.png
+├── media/
+│   ├── product_images/
+│       ├── BK-BOK-0014_img_01.jpg
+│       ├── BK-DIG-0012_img_01.jpg
+│       ├── BK-ELC-0007_img_01.jpg
+│       ├── BK-ELC-0008_img_01.jpg
+│       ├── BK-ELR-0005_img_01.jpg
+│       ├── BK-ELR-0006_img_01.jpg
+│       ├── BK-MCU-0001_img_01.jpg
+│       ├── BK-MCU-0002_img_01.jpg
+│       ├── BK-POW-0009_img_01.jpg
+│       ├── BK-POW-0009_img_01.png
+│       ├── BK-POW-0010_img_01.jpg
+│       ├── BK-ROT-0011_img_01.jpg
+│       ├── BK-SEN-0003_img_01.jpg
+│       ├── BK-SEN-0004_img_01.jpg
+│       └── BK-TOL-0013_img_01.jpg
+├── static/
+│   ├── css/
+│   │   ├── components/
+│   │   │   ├── badge.css
+│   │   │   ├── button.css
+│   │   │   ├── card.css
+│   │   │   ├── form.css
+│   │   │   ├── logo.css
+│   │   │   ├── search.css
+│   │   │   └── topbar.css
+│   │   ├── pages/
+│   │   │   ├── cart.css
+│   │   │   ├── catalog.css
+│   │   │   └── checkout.css
+│   │   ├── partials/
+│   │   │   ├── header.css
+│   │   │   └── sidebar.css
+│   │   ├── base.css
+│   │   ├── layout.css
+│   │   └── site.css
+│   ├── img/
+│   │   ├── booksmakers_logo01.png
+│   │   ├── booksmakers_logo02.png
+│   │   └── booksmakers_logo03.png
+│   ├── js/
+│       └── menu.js
+├── templates/
+│   ├── accounts/
+│   │   ├── login.html
+│   │   ├── order_history.html
+│   │   └── support.html
+│   ├── admin/
+│   │   ├── base_site.html
+│   │   ├── csv_form.html
+│   │   └── products_changelist.html
+│   ├── cart/
+│   │   └── cart_list.html
+│   ├── catalog/
+│   │   ├── category_list.html
+│   │   ├── product_detail.html
+│   │   └── product_list.html
+│   ├── orders/
+│   │   ├── checkout.html
+│   │   └── complete.html
+│   ├── partials/
+│   │   ├── footer.html
+│   │   ├── header.html
+│   │   ├── nav_category.html
+│   │   └── nav_recursive.html
+│   ├── registration/
+│   │   └── login.html
+│   ├── users/
+│   │   ├── mypage.html
+│   │   └── signup.html
+│   ├── base.html
+│   └── home.html
+├── users/
+│   ├── __pycache__/
+│   │   ├── __init__.cpython-313.pyc
+│   │   ├── admin.cpython-313.pyc
+│   │   ├── apps.cpython-313.pyc
+│   │   ├── models.cpython-313.pyc
+│   │   ├── urls.cpython-313.pyc
+│   │   └── views.cpython-313.pyc
+│   ├── migrations/
+│   │   ├── __pycache__/
+│   │   │   └── __init__.cpython-313.pyc
+│   │   └── __init__.py
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── manage.py
+└── requirements.txt
