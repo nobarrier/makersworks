@@ -55,7 +55,7 @@
                 <a href="{% url 'catalog:detail' product.pk %}" class="mall-card__image-link">
                     <div class="mall-card__thumb">
                         {% with product.images.all as image_list %}
-                            {% if image_list %}
+                            {% if image_list|length > 0 %}
                                 <img src="{{ image_list.0.image.url }}" alt="{{ product.name }}">
 
                             {% elif product.image_url %}
