@@ -74,11 +74,21 @@ class Command(BaseCommand):
                     mpn=mpn,
                     defaults={
                         "name": item.get("description") or mpn,
+                        "image_url": item.get("image") or "",  # ⭐ 이미지 저장
                     },
                 )
 
             # 카테고리 자동 분류
+            from apps.catalog.models import Category
+
             category = auto_assign_category(item)
+
+            # fallback category
+            if category is None:
+                category, _ = Category.objects.get_or_create(
+                    name="Uncategorized",
+                    slug="uncategorized",
+                )
 
             slug_value = ensure_unique_slug(
                 item.get("description") or serial_number,
@@ -98,6 +108,7 @@ class Command(BaseCommand):
                     "manufacturer": manufacturer,
                     "mpn": mpn,
                     "source_url": item.get("url") or "",
+                    "image_url": item.get("image") or "",  # ⭐ 이미지 저장
                     "category": category,
                     "canonical": canonical,
                 },
@@ -117,7 +128,6 @@ class Command(BaseCommand):
 
             if created:
                 print(f"✔ Created: {obj.name}")
-
             else:
                 print(f"↻ Updated: {obj.name}")
 

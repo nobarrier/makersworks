@@ -1,4 +1,5 @@
-from apps.catalog.services.import_schema import ExternalProductSchema
+from django.utils.text import slugify
+
 from apps.catalog.services.external_api.digikey_api import (
     search_products,
     normalize_products,
@@ -15,20 +16,9 @@ from apps.catalog.models import (
     SupplierProduct,
 )
 
-from django.utils.text import slugify
-
 from apps.catalog.services.base_importer import NormalizedItem
-from apps.catalog.services.importers.upsert_engine import upsert_product
 
 category_cache = {}
-
-from apps.catalog.services.external_api.digikey_api import (
-    search_products,
-    normalize_products,
-)
-
-from apps.catalog.services.base_importer import NormalizedItem
-from apps.catalog.services.importers.upsert_engine import upsert_product
 
 
 def fetch_and_transform(keyword):
@@ -59,11 +49,11 @@ def fetch_and_transform(keyword):
 def run_import(keyword):
     items = fetch_and_transform(keyword)
 
-    print("items count:", len(items))  # 🔥 추가
+    print("items count:", len(items))
 
     for item in items:
-        print("importing:", item.name)  # 🔥 추가
-        upsert_product(item)
+        print("importing:", item.name)
+        save_products([item])
 
 
 def ensure_default_warehouse():
@@ -129,7 +119,7 @@ def save_products(products):
 
     for p in products:
 
-        if not p.external_id:
+        if not p.supplier_part_number:
             continue
 
         root_name = map_to_root_category(p.category_path)
@@ -140,21 +130,22 @@ def save_products(products):
 
         slug_base = slugify(p.name or "product")[:40]
 
-        slug = f"{slug_base}-{p.external_id[:6]}"
+        slug = f"{slug_base}-{p.supplier_part_number[:6]}"
 
-        # Product 생성 (MPN 기준)
+        # 🔥 Product 생성 (이미지 URL 포함)
         product, created = Product.objects.update_or_create(
-            manufacturer=p.brand,
-            mpn=p.external_id,
+            manufacturer=p.manufacturer,
+            mpn=p.mpn,
             defaults={
                 "name": p.name or "No Name",
                 "slug": slug,
-                "serial_number": p.external_id,
+                "serial_number": p.supplier_part_number,
                 "category": category,
-                "brand": p.brand or "",
+                "brand": p.manufacturer or "",
                 "price": int(p.price or 0),
-                "short_description": p.description or "",
-                "source_url": "",
+                "short_description": "",
+                "source_url": p.url or "",
+                "image_url": p.image_url or "",  # ⭐ 이미지 저장
                 "is_active": True,
                 "source_supplier": "digikey",
                 "source_category_path": p.category_path,
@@ -162,21 +153,21 @@ def save_products(products):
             },
         )
 
-        # 가격 비교 데이터 저장
+        # 🔥 가격 비교 데이터 저장
         SupplierProduct.objects.update_or_create(
             supplier=supplier,
-            supplier_part_number=p.external_id,
+            supplier_part_number=p.supplier_part_number,
             defaults={
                 "product": product,
                 "price": float(p.price or 0),
                 "stock": int(p.stock or 0),
-                "url": "",
+                "url": p.url or "",
             },
         )
 
         variant, v_created = ProductVariant.objects.get_or_create(
             product=product,
-            sku=p.external_id,
+            sku=p.supplier_part_number,
             defaults={
                 "cost_price": int(p.price or 0),
                 "selling_price": int(p.price or 0),
@@ -202,13 +193,3 @@ def save_products(products):
             "| Variant:",
             "NEW" if v_created else "EXISTS",
         )
-
-    def run_import(keyword):
-
-        items = fetch_and_transform(keyword)
-
-        print("items count:", len(items))  # 🔥 추가
-
-        for item in items:
-            print("importing:", item.name)  # 🔥 추가
-            upsert_product(item)

@@ -1,10 +1,9 @@
 import requests
-import base64
 from django.conf import settings
 
-CLIENT_ID = settings.DIGIKEY_CLIENT_ID
-CLIENT_SECRET = settings.DIGIKEY_CLIENT_SECRET
-ENV = settings.DIGIKEY_ENV.lower()
+CLIENT_ID = (settings.DIGIKEY_CLIENT_ID or "").strip()
+CLIENT_SECRET = (settings.DIGIKEY_CLIENT_SECRET or "").strip()
+ENV = (settings.DIGIKEY_ENV or "production").lower().strip()
 
 if ENV == "sandbox":
     TOKEN_URL = "https://sandbox-api.digikey.com/v1/oauth2/token"
@@ -16,15 +15,16 @@ def get_access_token():
     if not CLIENT_ID or not CLIENT_SECRET:
         raise RuntimeError("DIGIKEY_CLIENT_ID / DIGIKEY_CLIENT_SECRET missing")
 
-    credentials = f"{CLIENT_ID}:{CLIENT_SECRET}"
-    encoded_credentials = base64.b64encode(credentials.encode()).decode()
-
     headers = {
-        "Authorization": f"Basic {encoded_credentials}",
         "Content-Type": "application/x-www-form-urlencoded",
+        "Accept": "application/json",
     }
 
-    data = {"grant_type": "client_credentials"}
+    data = {
+        "grant_type": "client_credentials",
+        "client_id": CLIENT_ID,
+        "client_secret": CLIENT_SECRET,
+    }
 
     response = requests.post(
         TOKEN_URL,

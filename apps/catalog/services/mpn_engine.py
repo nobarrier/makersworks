@@ -2,12 +2,20 @@ from apps.catalog.models import Product, CanonicalProduct
 
 
 def unify_products_by_mpn():
-    products = Product.objects.exclude(mpn="").exclude(manufacturer="")
+    products = (
+        Product.objects.exclude(mpn="")
+        .exclude(manufacturer="")
+        .select_related("category")
+    )
 
     for p in products:
-        canonical, _ = CanonicalProduct.objects.get_or_create(
-            manufacturer=p.manufacturer.lower().strip(),
-            mpn=p.mpn.lower().strip(),
+
+        manufacturer = p.manufacturer.lower().strip()
+        mpn = p.mpn.lower().strip()
+
+        canonical, created = CanonicalProduct.objects.get_or_create(
+            manufacturer=manufacturer,
+            mpn=mpn,
             defaults={
                 "name": p.name,
                 "category": p.category,
@@ -15,5 +23,6 @@ def unify_products_by_mpn():
             },
         )
 
-        p.canonical = canonical
-        p.save(update_fields=["canonical"])
+        if p.canonical_id != canonical.id:
+            p.canonical = canonical
+            p.save(update_fields=["canonical"])

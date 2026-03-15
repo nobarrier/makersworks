@@ -143,6 +143,12 @@ DIGIKEY_CLIENT_SECRET = os.getenv("DIGIKEY_CLIENT_SECRET")
 DIGIKEY_ENV = os.getenv("DIGIKEY_ENV", "production")
 
 # ========================
+# MOUSER API
+# ========================
+
+MOUSER_API_KEY = os.getenv("MOUSER_API_KEY")
+
+# ========================
 # PASSWORD VALIDATION
 # ========================
 
