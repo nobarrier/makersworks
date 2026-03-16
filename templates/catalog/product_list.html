@@ -59,9 +59,6 @@
                         {% if product.image_url %}
                             <img src="{{ product.image_url }}" alt="{{ product.name }}">
 
-                        {% elif product.images.first %}
-                            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
-
                         {% else %}
                             <div class="mall-card__placeholder">NO IMAGE</div>
 
