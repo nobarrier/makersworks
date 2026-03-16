@@ -53,20 +53,22 @@
             <article class="mall-card">
 
                 <a href="{% url 'catalog:detail' product.pk %}" class="mall-card__image-link">
+
                     <div class="mall-card__thumb">
-                        {% with product.images.all as image_list %}
-                            {% if image_list|length > 0 %}
-                                <img src="{{ image_list.0.image.url }}" alt="{{ product.name }}">
 
-                            {% elif product.image_url %}
-                                <img src="{{ product.image_url }}" alt="{{ product.name }}">
+                        {% if product.image_url %}
+                            <img src="{{ product.image_url }}" alt="{{ product.name }}">
 
-                            {% else %}
-                                <div class="mall-card__placeholder">NO IMAGE</div>
+                        {% elif product.images.first %}
+                            <img src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
 
-                            {% endif %}
-                        {% endwith %}
+                        {% else %}
+                            <div class="mall-card__placeholder">NO IMAGE</div>
+
+                        {% endif %}
+
                     </div>
+
                 </a>
 
                 <div class="mall-card__body">
