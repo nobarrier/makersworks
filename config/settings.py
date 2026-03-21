@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "apps.catalog",
     "users",
     "accounts",
+    "erp",
 ]
 
 # ========================
